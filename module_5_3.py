@@ -1,54 +1,64 @@
 class House:
     def __init__(self, name, number_of_floors):
-        self.name = name  # Название дома
-        self.number_of_floors = number_of_floors  # Количество этажей
+        self.name = name
+        self.number_of_floors = number_of_floors
 
     def go_to(self, new_floor):
+        if not isinstance(new_floor, int):
+            raise TypeError("new_floor должен быть целым числом")
         if new_floor < 1 or new_floor > self.number_of_floors:
-            print("Такого этажа не существует")  # Если этаж вне диапазона
+            print("Такого этажа не существует")
         else:
             for floor in range(1, new_floor + 1):
-                print(floor)  # Выводим этажи от 1 до new_floor
+                print(floor)
 
-
-    def __len__(self):
-        return self.number_of_floors  # Возвращаем количество этажей
+    def len(self):
+        return self.number_of_floors
 
     def __str__(self):
-       return f'Название: {self.name}; Колличество этажей: {self.number_of_floors} '
+        return f'Название: {self.name}; Количество этажей: {self.number_of_floors}'
 
     def __eq__(self, other):
+        self._check_house(other)
         return self.number_of_floors == other.number_of_floors
 
     def __gt__(self, other):
+        self._check_house(other)
         return self.number_of_floors > other.number_of_floors
 
-    def __ge__(self,other):
+    def __ge__(self, other):
+        self._check_house(other)
         return self.number_of_floors >= other.number_of_floors
 
     def __lt__(self, other):
+        self._check_house(other)
         return self.number_of_floors < other.number_of_floors
 
     def __le__(self, other):
+        self._check_house(other)
         return self.number_of_floors <= other.number_of_floors
 
     def __ne__(self, other):
+        self._check_house(other)
         return self.number_of_floors != other.number_of_floors
 
     def __add__(self, value):
-        if value > 0:  # Проверяем, что значение положительное
-            self.number_of_floors += value  # Увеличиваем количество этажей
-        return self  # Возвращаем сам объект
+        if not isinstance(value, int):
+            raise TypeError("value должен быть целым числом")
+        if value > 0:
+            self.number_of_floors += value
+        return self
 
     def __radd__(self, value):
-        if value > 0:
-            self.number_of_floors += value
-        return self
+        return self.__add__(value)
 
     def __iadd__(self, value):
-        if value > 0:
-            self.number_of_floors += value
-        return self
+        return self.__add__(value)
+
+    def _check_house(self, other):
+        if not isinstance(other, House):
+            raise TypeError("other должен быть экземпляром класса House")
+
 
 h1 = House('ЖК Эльбрус', 10)
 h2 = House('ЖК Акация', 20)
@@ -56,20 +66,20 @@ h2 = House('ЖК Акация', 20)
 print(h1)
 print(h2)
 
-print(h1 == h2) # __eq__
+print(h1 == h2)
 
-h1 = h1 + 10 # __add__
+h1 = h1 + 10
 print(h1)
 print(h1 == h2)
 
-h1 += 10 # __iadd__
+h1 += 10
 print(h1)
 
-h2 = 10 + h2 # __radd__
+h2 = 10 + h2
 print(h2)
 
-print(h1 > h2) # __gt__
-print(h1 >= h2) # __ge__
-print(h1 < h2) # __lt__
-print(h1 <= h2) # __le__
-print(h1 != h2) # __ne__
+print(h1 > h2)
+print(h1 >= h2)
+print(h1 < h2)
+print(h1 <= h2)
+print(h1 != h2)
