@@ -1,10 +1,9 @@
 def add_everything_up(a, b):
-    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+    try:
+        # Проверяем, можно ли сложить числа
         return a + b
-    elif isinstance(a, str) and isinstance(b, str):
-        return a + b
-    else:
-        # Если типы разные, возвращаем строковое представление
+    except TypeError:
+        # Если возникает ошибка, возвращаем строковое представление
         return str(a) + str(b)
 
 # Примеры использования
